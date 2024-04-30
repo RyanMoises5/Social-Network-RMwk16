@@ -1,8 +1,7 @@
-const connection = require('../config/connection');
-const { Reaction, Thought, User } = require('../models');
+const { connect, connection } = require('mongoose');
 
-connection.on('error', (err) => err);
+const connectionString = 'mongodb://127.0.0.1:27017/socialDB';
 
-connection.once('open', async () => {
-  // seed data function here
-});
+connect(connectionString);
+
+module.exports = connection;
