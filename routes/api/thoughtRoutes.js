@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const {
   getThoughts,
-  getSingleThought
+  getSingleThought,
+  createThought
 } = require('../../controllers/thoughtController.js')
 
 router.route('/')
   .get(getThoughts)
-  .post()
+  .post(createThought)
 
 router.route('/:thoughtId')
   .get(getSingleThought)

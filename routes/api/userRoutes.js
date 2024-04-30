@@ -1,12 +1,13 @@
 const router = require('express').Router();
 const {
   getUsers,
-  getSingleUser
+  getSingleUser,
+  createUser
 } = require('../../controllers/userController.js')
 
 router.route('/')
   .get(getUsers)
-  .post()
+  .post(createUser)
 
 router.route('/:userId')
   .get(getSingleUser)
