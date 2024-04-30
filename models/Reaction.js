@@ -17,15 +17,25 @@ const reactionSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now()
+      default: Date.now(),
+
+      // Getter method to format timestamp 
+      get: (date) => {
+        // Initial format: Tue Apr 30 2024 02:23:05 GMT-0400 (Eastern Daylight Time)
+        let dateSplit = date.toString().split(" ")
+        return `${dateSplit[1]} ${dateSplit[2]}, ${dateSplit[3]} at ${dateSplit[4]}`;
+        // Output format: Apr 30, 2024 at 02:23:05
+      }
+
     },
   },
   {
+    toJSON: {
+      virtuals: true,
+      getters: true
+    },
     id: false
   }
 )
-
-// * `createdAt`
-//   * Use a getter method to format the timestamp on query
 
 module.exports = reactionSchema;

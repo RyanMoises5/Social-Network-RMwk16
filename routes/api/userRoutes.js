@@ -1,10 +1,10 @@
 const router = require('express').Router();
 const {
-
+  getUsers
 } = require('../../controllers/userController.js')
 
 router.route('/')
-  .get()
+  .get(getUsers)
   .post()
 
 router.route('/:userId')

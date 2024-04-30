@@ -5,7 +5,7 @@ const { usersData, thoughtsData } = require('./data.js')
 connection.on('error', (err) => err);
 
 connection.once('open', async () => {
-  console.log('Connected');
+  console.log('\n-------------- DATABASE SYNCED --------------n');
 
   // Delete the collections if they exist
   let userCheck = await connection.db.listCollections({ name: 'users' }).toArray();
@@ -18,11 +18,15 @@ connection.once('open', async () => {
     await connection.dropCollection('thoughts');
   }
 
-  await User.collection.insertMany(usersData);
-  await Thought.collection.insertMany(thoughtsData);
+  const userSeed = await User.create(usersData);
+  const thoughtSeed = await Thought.create(thoughtsData);
 
-  console.table(usersData);
-  console.table(thoughtsData);
+  console.log(userSeed);
+  console.log('\n-------------- USER DATA SEEDED --------------n');
+  console.log(thoughtSeed);
+  console.log('\n-------------- THOUGHT DATA SEEDED --------------n');
+
   console.info('Seeding complete! 🌱');
+  
   process.exit(0);
 });

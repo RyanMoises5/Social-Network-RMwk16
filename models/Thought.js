@@ -11,7 +11,16 @@ const thoughtSchema = new Schema(
     },
     createdAt: {
       type: Date,
-      default: Date.now()
+      default: Date.now(),
+
+      // Getter method to format timestamp 
+      get: (date) => {
+        // Initial format: Tue Apr 30 2024 02:23:05 GMT-0400 (Eastern Daylight Time)
+        let dateSplit = date.toString().split(" ")
+        return `${dateSplit[1]} ${dateSplit[2]}, ${dateSplit[3]} at ${dateSplit[4]}`;
+        // Output format: Apr 30, 2024 at 02:23:05
+      }
+
     },
     username: {
       type: String,
@@ -20,16 +29,22 @@ const thoughtSchema = new Schema(
     reactions: [reactionSchema]
   },
   {
+    toJSON: {
+      virtuals: true,
+      getters: true
+    },
     id: false
   }
 );
 
-const Thought = model('thought', thoughtSchema);
-
-// * `createdAt`
-//   * Use a getter method to format the timestamp on query
-
 // Create a virtual called `reactionCount` 
 // that retrieves the length of the thought's `reactions` array field on query.
+thoughtSchema
+  .virtual('reactionCount')
+  .get(function () {
+    return this.reactions.length;
+  });
+
+const Thought = model('thought', thoughtSchema);
 
 module.exports = Thought;
