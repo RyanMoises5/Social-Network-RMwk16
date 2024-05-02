@@ -1,4 +1,4 @@
-const { Thought, User, Reaction } = require('../models');
+const { Thought, User } = require('../models');
 
 module.exports = {
   // Get all thoughts
@@ -49,7 +49,7 @@ module.exports = {
     }
   },
 
-  // Update thought (Only thought text, disabled updating username)
+  // Update thought (Only allowing update on 'thoughtText'. I disabled updating username because that would not make sense from a user's viewpoint)
   async updateThought(req, res) {
     try {
       const thought = await Thought.findOneAndUpdate(

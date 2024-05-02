@@ -52,7 +52,7 @@ module.exports = {
         res.status(404).json({ message: 'No user with that ID' });
       }
 
-      await Thought.deleteMany({ _id: { $in: user.thoughts } }); // Needs testing
+      await Thought.deleteMany({ _id: { $in: user.thoughts } });
 
       res.json({ message: 'User and thoughts deleted!' });
 
@@ -83,6 +83,7 @@ module.exports = {
     }
   },
 
+  // Add friend to user
   async addFriend(req, res) {
     try {
       const user = await User.findOneAndUpdate(
@@ -103,6 +104,7 @@ module.exports = {
     }
   },
 
+  // Remove friend from user
   async removeFriend(req, res) {
     try {
       const user = await User.findOneAndUpdate(
