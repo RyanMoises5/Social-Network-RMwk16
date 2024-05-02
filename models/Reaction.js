@@ -2,6 +2,7 @@ const { Schema, Types } = require('mongoose');
 
 const reactionSchema = new Schema(
   {
+    // reactionId not necessary (because _id exists), but this was kept as per directions from the challenge's requirements
     reactionId: {
       type: Schema.Types.ObjectId,
       default: () => new Types.ObjectId(),

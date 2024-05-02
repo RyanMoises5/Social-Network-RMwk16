@@ -9,6 +9,7 @@ To build an API for a social network web application where users can share their
 ## Table of Contents
 * [User Story](#user-story)
 * [Acceptance Criteria](#acceptance-criteria)
+* [How to Test](#how-to-test)
 * [URLs and Images](#urls-and-images)
 
 ## User Story
@@ -32,6 +33,10 @@ THEN I am able to successfully create, update, and delete users and thoughts in 
 WHEN I test API POST and DELETE routes in Insomnia
 THEN I am able to successfully create and delete reactions to thoughts and add and remove friends to a user’s friend list
 ```
+
+## How to Test
+
+To start the application, ```npm start``` must be initiated in the CLI.
 
 ## URLs and Images 
 

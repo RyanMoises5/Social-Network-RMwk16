@@ -26,6 +26,7 @@ const thoughtSchema = new Schema(
       type: String,
       required: true
     },
+    // When new reactions are added, they will be parsed through the reaction schema made in Reaction.js
     reactions: [reactionSchema]
   },
   {
@@ -37,8 +38,7 @@ const thoughtSchema = new Schema(
   }
 );
 
-// Create a virtual called `reactionCount` 
-// that retrieves the length of the thought's `reactions` array field on query.
+// Virtual called `reactionCount` that retrieves the length of the thought's `reactions` array field
 thoughtSchema
   .virtual('reactionCount')
   .get(function () {
