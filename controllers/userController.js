@@ -4,7 +4,10 @@ module.exports = {
   // Get all users
   async getUsers(req, res) {
     try {
-      const users = await User.find().select('-__v').populate('thoughts', 'friends');
+      const users = await User.find()
+        .select('-__v')
+        .populate({ path: 'thoughts', select: '-__v -username' })
+        .populate({ path: 'friends', select: '-__v' })
       res.json(users);
     } catch (err) {
       res.status(500).json(err);
@@ -16,7 +19,8 @@ module.exports = {
     try {
       const user = await User.findOne({ _id: req.params.userId })
       .select('-__v')
-      .populate('thoughts', 'friends')
+      .populate({ path: 'thoughts', select: '-__v -username' })
+      .populate({ path: 'friends', select: '-__v' })
 
     if (!user) {
       return res.status(404).json({ message: 'No user with that ID' });
@@ -48,7 +52,7 @@ module.exports = {
         res.status(404).json({ message: 'No user with that ID' });
       }
 
-      await Thought.deleteMany({ _id: { $in: user.thoughts } });
+      await Thought.deleteMany({ _id: { $in: user.thoughts } }); // Needs testing
 
       res.json({ message: 'User and thoughts deleted!' });
 
@@ -72,10 +76,50 @@ module.exports = {
       }
 
       res.json(user);
-      
+
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
     }
   },
+
+  async addFriend(req, res) {
+    try {
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $addToSet: { friends: req.params.friendId }},
+        { runValidators: true, new: true }
+      );
+
+      if (!user) {
+        res.status(404).json({ message: 'No user with this id!' });
+      }
+
+      res.json(user);
+
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  },
+
+  async removeFriend(req, res) {
+    try {
+      const user = await User.findOneAndUpdate(
+        { _id: req.params.userId },
+        { $pull: { friends: req.params.friendId } },
+        { runValidators: true, new: true }
+      );
+
+      if (!user) {
+        res.status(404).json({ message: 'No user with this id!' });
+      }
+
+      res.json(user);
+
+    } catch (err) {
+      console.log(err);
+      return res.status(500).json(err);
+    }
+  }
 }
