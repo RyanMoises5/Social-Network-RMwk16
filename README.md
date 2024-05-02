@@ -40,9 +40,11 @@ The following link is the GitHub repository where the associated files are locat
 (https://github.com/RyanMoises5/Social-Network-RMwk18)
 
 ![GIF of the User Routes](./assets/UserDemo.gif)
+
 Click [HERE](./assets/UserDemo.webm) for the raw video showcasing how the User routes work
 
 ![GIF of the Thought Routes](./assets/ThoughtDemo.gif)
+
 Click [HERE](./assets/ThoughtDemo.webm) for the raw video showcasing how the Thought routes work
 
 
